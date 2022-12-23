@@ -5,7 +5,7 @@
 	"main": "src/index.ts",
 	"private": true,
 	"scripts": {
-		"build": "npx tsc ./src/index.ts",
+		"build": "npx tsc && node ./**/*.js",
 		"dev": "npx nodemon --watch './src/**/*.ts' --exec 'ts-node' --esm ./src/index.ts",
 		"start": "npx tsc && node *.js"
 	},
