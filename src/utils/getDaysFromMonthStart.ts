@@ -1,6 +1,8 @@
+import { getCurrentDay } from '../packages/Date/index';
+
 export const getDaysFromMonthStart = (): TDayItem[] => {
 	const days: TDayItem[] = [];
-	const currentDay = new Date().getDate();
+	const currentDay = getCurrentDay();
 
 	let day = 1;
 	let end: boolean = false;

@@ -1,13 +1,13 @@
-import { TSelectDate } from '../bot/types';
+import { getCurrentDay } from '../packages/Date';
 
 export const parseDate = (
 	date: number | string,
-	currentDate = new Date(),
+	currentDay = getCurrentDay(),
 ): number => {
 	if (date === 'Сегодня') {
-		return currentDate.getDate();
+		return currentDay;
 	} else if (date === 'Вчера') {
-		return currentDate.getDate() - 1;
+		return currentDay - 1;
 	} else {
 		return typeof date == 'string' ? parseInt(date) : date;
 	}
