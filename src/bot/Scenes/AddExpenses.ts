@@ -1,25 +1,11 @@
-import { Composer, Markup } from 'telegraf';
-import { Scenes } from 'telegraf';
-import { getDaysFromMonthStart } from '../../utils/getDaysFromMonthStart';
-import { parseDate } from '../../utils/parseDate';
-import { MyContext } from '../types/index.d';
-import { apiAdatper } from '../model/index';
-import { createCategoriesKeyboards } from '../Keyboards/createCategoriesKeyboard';
-import * as regexprs from './regexp';
+import { Composer, Scenes } from 'telegraf';
 import { getRegexpMatch } from '../../utils/getRegexpMatch';
 import { mainMenu } from '../Keyboards/MainMenu';
-
-const daysKeyboard = Markup.inlineKeyboard(
-	getDaysFromMonthStart().map((day) => {
-		return Markup.button.callback(
-			day.toString(),
-			`selectDate-${parseDate(day)}`,
-		);
-	}),
-	{
-		columns: 7,
-	},
-);
+import { createCategoriesKeyboards } from '../Keyboards/createCategoriesKeyboard';
+import { getDaysKeyboard } from '../Keyboards/getDaysKeyboard';
+import { apiAdatper } from '../model/index';
+import { MyContext } from '../types/index.d';
+import * as regexprs from './regexp';
 
 export const name = 'addExpenses';
 
@@ -117,7 +103,7 @@ export const scene = new Scenes.WizardScene(
 	selectCategoryAndAmount,
 );
 scene.enter(async (ctx) => {
-	await ctx.reply('За какаую дату хочешь заполнить?', daysKeyboard);
+	await ctx.reply('За какаую дату хочешь заполнить?', getDaysKeyboard());
 	ctx.answerCbQuery();
 });
 
