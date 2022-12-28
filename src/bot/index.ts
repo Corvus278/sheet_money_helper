@@ -20,7 +20,7 @@ export const botLaunch = async () => {
 	bot.use(session());
 	bot.use(stage.middleware());
 
-	bot.start((ctx) => {
+	bot.start(async (ctx) => {
 		if (ctx.chat.id === USER_CHAT_TG_ID) {
 			ctx.reply('Что хочешь сделать?', mainMenu());
 		} else {

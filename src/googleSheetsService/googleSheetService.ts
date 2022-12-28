@@ -18,16 +18,6 @@ export class GoogleSheetsService {
 		this.doc = doc;
 	}
 
-	private get currentSheet() {
-		// Две последние таблицы - изначальные шаблоны, после них идёт таблица текущего месяца
-		// Не очень надёжно конечно, но пока похуй)
-		return this.doc.sheetsByIndex[this.doc.sheetCount - 3];
-	}
-
-	private loadCatergoriesCells = async () => {
-		await this.loadCellsByA1(this.config.categories.rangeCell);
-	};
-
 	getCategories = async (): Promise<ICategory[]> => {
 		await this.loadCatergoriesCells();
 
@@ -73,6 +63,10 @@ export class GoogleSheetsService {
 		return true;
 	};
 
+	updateDoc = async () => {
+		return await this.doc.loadInfo();
+	};
+
 	private getExpenseA1Addres = ({
 		category: categoryA1Adres,
 		date,
@@ -86,5 +80,15 @@ export class GoogleSheetsService {
 
 	private getCellByA1 = (a1: string) => {
 		return this.currentSheet.getCellByA1(a1);
+	};
+
+	private get currentSheet() {
+		// Две последние таблицы - изначальные шаблоны, после них идёт таблица текущего месяца
+		// Не очень надёжно конечно, но пока похуй)
+		return this.doc.sheetsByIndex[this.doc.sheetCount - 3];
+	}
+
+	private loadCatergoriesCells = async () => {
+		await this.loadCellsByA1(this.config.categories.rangeCell);
 	};
 }

@@ -16,6 +16,10 @@ export class ApiAdapter {
 	setExpenseOfDay = async (expense: IExpense): Promise<boolean | undefined> => {
 		return this.gSheetsApi?.setExpense(expense);
 	};
+
+	updateDoc = async () => {
+		await this.gSheetsApi?.updateDoc();
+	};
 }
 
 function getMokCategories() {

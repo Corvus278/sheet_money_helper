@@ -103,6 +103,7 @@ export const scene = new Scenes.WizardScene(
 	selectCategoryAndAmount,
 );
 scene.enter(async (ctx) => {
+	await apiAdatper.updateDoc();
 	await ctx.reply('За какаую дату хочешь заполнить?', getDaysKeyboard());
 	ctx.answerCbQuery();
 });
