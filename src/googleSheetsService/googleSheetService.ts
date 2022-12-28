@@ -1,8 +1,4 @@
-import {
-	IGoogleServiceAccount,
-	IGoogleSheetsServiceOptions,
-	ICategory,
-} from './types';
+import { IGoogleSheetsServiceOptions, ICategory } from './types';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { config } from './config';
 import { IExpense } from '../bot/model/types';
@@ -22,25 +18,25 @@ export class GoogleSheetsService {
 		this.doc = doc;
 	}
 
-	get #currentSheet() {
+	private get currentSheet() {
 		// Две последние таблицы - изначальные шаблоны, после них идёт таблица текущего месяца
 		// Не очень надёжно конечно, но пока похуй)
 		return this.doc.sheetsByIndex[this.doc.sheetCount - 3];
 	}
 
-	#loadCatergoriesCells = async () => {
+	private loadCatergoriesCells = async () => {
 		await this.loadCellsByA1(this.config.categories.rangeCell);
 	};
 
 	getCategories = async (): Promise<ICategory[]> => {
-		await this.#loadCatergoriesCells();
+		await this.loadCatergoriesCells();
 
 		const categoriesList: ICategory[] = [];
 		const {
 			rowIndex: categoriesRowIndex,
 			columnIndex: categoriesStartColumnIndex,
-		} = this.#currentSheet.getCellByA1(this.config.categories.startCell);
-		const categoriesEndColumnIndex = this.#currentSheet.getCellByA1(
+		} = this.currentSheet.getCellByA1(this.config.categories.startCell);
+		const categoriesEndColumnIndex = this.currentSheet.getCellByA1(
 			this.config.categories.endCell,
 		).columnIndex;
 
@@ -49,7 +45,7 @@ export class GoogleSheetsService {
 			i <= categoriesEndColumnIndex;
 			i++
 		) {
-			const currentCell = this.#currentSheet.getCell(categoriesRowIndex, i);
+			const currentCell = this.currentSheet.getCell(categoriesRowIndex, i);
 
 			categoriesList.push({
 				id: currentCell.a1Address,
@@ -72,7 +68,7 @@ export class GoogleSheetsService {
 
 		currentCell.value = expense.amount;
 
-		await this.#currentSheet.saveUpdatedCells();
+		await this.currentSheet.saveUpdatedCells();
 
 		return true;
 	};
@@ -85,10 +81,10 @@ export class GoogleSheetsService {
 	};
 
 	private loadCellsByA1 = async (a1: string) => {
-		await this.#currentSheet.loadCells(a1);
+		await this.currentSheet.loadCells(a1);
 	};
 
 	private getCellByA1 = (a1: string) => {
-		return this.#currentSheet.getCellByA1(a1);
+		return this.currentSheet.getCellByA1(a1);
 	};
 }
