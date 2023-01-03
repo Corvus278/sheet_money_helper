@@ -1,3 +1,3 @@
 export const config = {
-	categoriesCells: 'H1:T1',
+	categoriesCells: 'H1:U1',
 };
