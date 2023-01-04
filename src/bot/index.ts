@@ -4,14 +4,13 @@ import * as scenes from './Scenes';
 import * as actions from './actions';
 import { apiAdatper } from './model/index';
 import { MyContext } from './types';
-import { IDI_NA_HYI_PHOTO_URL, USER_CHAT_TG_ID } from '../consts';
+import { IDI_NA_HYI_PHOTO_URL, USER_CHAT_TG_ID, BOT_TOKEN } from '../consts';
 require('dotenv').config();
 
 export const botLaunch = async () => {
 	// Wait init google api
 	await apiAdatper.init();
 
-	const { BOT_TOKEN } = process.env;
 	if (!BOT_TOKEN) throw new Error('"BOT_TOKEN" env var is required!');
 	const bot = new Telegraf<MyContext>(BOT_TOKEN);
 

@@ -1,6 +1,14 @@
 import { getEnv } from './utils/getEnv';
 require('dotenv').config();
 
+export const ENVIRONMENT = getEnv('ENVIRONMENT');
+export const IS_DEV = ENVIRONMENT === 'DEVELOPMENT';
+export const IS_PROD = ENVIRONMENT === 'PRODUCTION';
+
+export const BOT_TOKEN = IS_PROD
+	? getEnv('BOT_TOKEN')
+	: getEnv('DEV_BOT_TOKEN');
+
 export const GOOGLE_SHEET_ID = getEnv('GOOGLE_SHEET_ID');
 export const GOOGLE_SERVICE_ACCOUNT_KEY = getEnv(
 	'GOOGLE_SERVICE_ACCOUNT_KEY',
