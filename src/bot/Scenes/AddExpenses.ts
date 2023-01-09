@@ -59,8 +59,12 @@ selectCategoryAndAmount.action(/selectCategory/, async (ctx) => {
 	return;
 });
 
-selectCategoryAndAmount.on('text', async (ctx) => {
-	const input = parseInt(ctx.message.text);
+selectCategoryAndAmount.on('text', async (ctx, next) => {
+	const text = ctx.message.text;
+	if (text.startsWith('/')) {
+		return next();
+	}
+	const input = parseInt(text);
 	if (isNaN(input)) {
 		await ctx.reply('Нужно ввести число!');
 		return;

@@ -1,4 +1,4 @@
-import { Scenes, Telegraf, session } from 'telegraf';
+import { Scenes, Telegraf, Telegram, session } from 'telegraf';
 import { mainMenu } from './Keyboards/MainMenu';
 import * as scenes from './Scenes';
 import * as actions from './actions';
@@ -13,6 +13,7 @@ export const botLaunch = async () => {
 
 	if (!BOT_TOKEN) throw new Error('"BOT_TOKEN" env var is required!');
 	const bot = new Telegraf<MyContext>(BOT_TOKEN);
+	const tg = new Telegram(BOT_TOKEN);
 
 	// Init stage for scenes
 	const stage = new Scenes.Stage<MyContext>([scenes.addExpenses.scene]);
@@ -30,7 +31,19 @@ export const botLaunch = async () => {
 	bot.action(actions.CALCULATE_EXPENSES, (ctx) => {
 		ctx.scene.enter(scenes.addExpenses.name, scenes.addExpenses.scene);
 	});
-	1;
+
+	bot.command(actions.MAIN_MENU, async (ctx) => {
+		await ctx.scene.leave();
+		ctx.reply('Что хочешь сделать?', mainMenu());
+	});
+
+	tg.setMyCommands([
+		{
+			command: `/${actions.MAIN_MENU}`,
+			description: 'Главное меню',
+		},
+	]);
+
 	try {
 		bot.launch();
 		console.log('bot launch!');
