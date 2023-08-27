@@ -5,7 +5,8 @@
 	"main": "src/index.ts",
 	"private": true,
 	"scripts": {
-		"build": "npx tsc && node ./**/*.js",
+		"transpile": "npx tsc && node ./**/*.js",
+		"build": "webpack --mode development",
 		"dev": "npx nodemon --watch './src/**/*.ts' --exec 'ts-node' --esm ./src/index.ts",
 		"start": "node ./dist/index.js",
 		"deploy": "cd dist && rsync --archive --compress --delete . test-rsync@89.108.76.178:/home/test-rsync/money-helper/bot"

@@ -45,7 +45,7 @@ export const botLaunch = async () => {
 	]);
 
 	try {
-		bot.launch();
+		await bot.launch();
 		console.log('bot launch!');
 	} catch (e) {
 		console.log('launch err -', e);
