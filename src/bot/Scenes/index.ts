@@ -1,1 +1,1 @@
-export * as addExpenses from './AddExpenses';
+export * as addExpenses from './AddExpenses/index';

@@ -1,11 +1,12 @@
 import { Composer, Scenes } from 'telegraf';
-import { getRegexpMatch } from '../../utils/getRegexpMatch';
-import { mainMenu } from '../Keyboards/MainMenu';
-import { createCategoriesKeyboards } from '../Keyboards/createCategoriesKeyboard';
-import { getDaysKeyboard } from '../Keyboards/getDaysKeyboard';
-import { apiAdatper } from '../model/index';
-import { MyContext } from '../types/index.d';
-import * as regexprs from './regexp';
+import { getRegexpMatch } from '../../../utils/getRegexpMatch';
+import { mainMenu } from '../../Keyboards/MainMenu';
+import { createCategoriesKeyboards } from '../../Keyboards/createCategoriesKeyboard';
+import { getDaysKeyboard } from '../../Keyboards/getDaysKeyboard';
+import { apiAdatper } from '../../model/index';
+import { MyContext } from '../../types';
+import * as regexprs from '../regexp';
+import { sendMessage } from './messages';
 
 export const name = 'addExpenses';
 
@@ -79,7 +80,7 @@ selectCategoryAndAmount.on('text', async (ctx, next) => {
 	});
 
 	if (res) {
-		await ctx.reply('Записано!');
+		await sendMessage.sendMessageWithStateData(ctx, 'Записано!');
 	} else {
 		await ctx.reply('Не получилось записать в таблицу');
 	}
@@ -108,8 +109,11 @@ export const scene = new Scenes.WizardScene(
 );
 scene.enter(async (ctx) => {
 	await apiAdatper.updateDoc();
-	await ctx.reply('За какаую дату хочешь заполнить?', getDaysKeyboard());
-	ctx.answerCbQuery();
+	await sendMessage.sendMessageWithStateData(
+		ctx,
+		'За какаую дату хочешь заполнить?',
+		getDaysKeyboard(),
+	);
 });
 
 scene.command('exit', (ctx) => {
