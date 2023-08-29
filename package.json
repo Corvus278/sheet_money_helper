@@ -9,7 +9,7 @@
 		"build": "webpack --mode development",
 		"dev": "npx nodemon --watch './src/**/*.ts' --exec 'ts-node' --esm ./src/index.ts",
 		"start": "node ./dist/index.js",
-		"deploy": "cd dist && rsync --archive --compress --delete . test-rsync@89.108.76.178:/home/test-rsync/money-helper/bot"
+		"deploy": "cd dist && rsync --archive --compress --delete . sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/"
 	},
 	"author": "Corvus278",
 	"license": "ISC",
