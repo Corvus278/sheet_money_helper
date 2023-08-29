@@ -23,6 +23,6 @@ jobs:
       - run: chmod 600 "$HOME/.ssh/key"
       # Build
       - run: npm ci
-      - run: ENVIRONMENT=${{ secrets.ENVIRONMENT }} BOT_TOKEN=${{ secrets.BOT_TOKEN }} GOOGLE_SERVICE_ACCOUNT_EMAIL=${{ secrets.GOOGLE_SERVICE_ACCOUNT_EMAIL }} GOOGLE_SERVICE_ACCOUNT_KEY=${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }} GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }} GOOGLE_SHEET_ID=${{ secrets.GOOGLE_SHEET_ID }} USER_CHAT_TG_ID=${{ secrets.USER_CHAT_TG_ID }} npm run build
+      - run: npm run build
       # Deploy
       - run: cd dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/
