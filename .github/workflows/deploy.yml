@@ -19,10 +19,10 @@ jobs:
       # Setup key
       - run: set -eu
       - run: mkdir "$HOME/.ssh"
-      - run: echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/key"
-      - run: chmod 600 "$HOME/.ssh/key"
+      - run: echo "${{ secrets.SSH_KEY }}" > "$HOME/.ssh/id_rsa"
+      - run: chmod 600 "$HOME/.ssh/id_rsa"
       # Build
       - run: npm ci
       - run: npm run build
       # Deploy
-      - run: cd dist && rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/
+      - run: npm run deploy

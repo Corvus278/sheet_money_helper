@@ -6,10 +6,10 @@
 	"private": true,
 	"scripts": {
 		"transpile": "npx tsc && node ./**/*.js",
-		"build": "webpack --mode development --config webpack.config.js",
+		"build": "webpack --mode development --config webpack.config.js ",
 		"dev": "npx nodemon --watch './src/**/*.ts' --exec 'ts-node' --esm ./src/index.ts",
 		"start": "node ./dist/index.js",
-		"deploy": "cd dist && rsync --archive --compress --delete . sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/"
+		"deploy": "cd dist && rsync -e \"ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no\" sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/bundle"
 	},
 	"author": "Corvus278",
 	"license": "ISC",
