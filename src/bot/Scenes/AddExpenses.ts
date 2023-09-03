@@ -64,7 +64,10 @@ selectCategoryAndAmount.on('text', async (ctx, next) => {
 	if (text.startsWith('/')) {
 		return next();
 	}
-	const input = parseInt(text);
+	// eval нужен для вычесления суммы, если введено выржание
+	// однако есть опасность XSS атаки, поэтому, при масштабировании
+	// нужно будет от этого избавиться (или придумать как экранировать)
+	const input = parseInt(eval(text));
 	if (isNaN(input)) {
 		await ctx.reply('Нужно ввести число!');
 		return;

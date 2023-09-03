@@ -8,7 +8,7 @@
 		"transpile": "npx tsc && node ./**/*.js",
 		"build": "webpack --mode development --config webpack.config.js ",
 		"dev": "npx nodemon --watch './src/**/*.ts' --exec 'ts-node' --esm ./src/index.ts",
-		"start": "node ./dist/index.js",
+		"start": "node ./dist/bundle.js",
 		"deploy": "cd dist && rsync -e \"ssh -i $HOME/.ssh/id_rsa -o StrictHostKeyChecking=no\" --archive --compress . sheets-money-helper@89.108.76.178:/home/sheets-money-helper/bot/bundle"
 	},
 	"author": "Corvus278",
